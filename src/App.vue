@@ -9,6 +9,7 @@
       :pages="pages"
       :pagesHiRes="pagesHiRes"
       :startPage="pageNum"
+      :zooms="zoom"
       v-slot="flipbook"
       ref="flipbook"
       @flip-left-start="onFlipLeftStart"
@@ -16,11 +17,8 @@
       @flip-right-start="onFlipRightStart"
       @flip-right-end="onFlipRightEnd"
       @zoom-start="onZoomStart"
-      @zoom-end="onZoomEnd"
-    >
+      @zoom-end="onZoomEnd">
       <div class="action-bar">
-      </div>
-      <!-- <div class="action-bar">
         <left-icon
           class="btn left"
           :class="{ disabled: !flipbook.canFlipLeft }"
@@ -32,7 +30,7 @@
           @click="flipbook.zoomIn"
         />
         <span class="page-num">
-          Page {{ flipbook.page }} of {{ flipbook.numPages }}
+          {{ flipbook.page }} / {{ flipbook.numPages }}
         </span>
         <minus-icon
           class="btn minus"
@@ -44,7 +42,7 @@
           :class="{ disabled: !flipbook.canFlipRight }"
           @click="flipbook.flipRight"
         />
-      </div> -->
+      </div>
     </Flipbook>
   </div>
 </template>
@@ -52,41 +50,61 @@
 <script>
 import Flipbook from 'flipbook-vue';
 import 'vue-material-design-icons/styles.css'
+import LeftIcon from 'vue-material-design-icons/ChevronLeftCircle'
+import RightIcon from 'vue-material-design-icons/ChevronRightCircle'
+import PlusIcon from 'vue-material-design-icons/PlusCircle'
+import MinusIcon from 'vue-material-design-icons/MinusCircle'
 
 export default {
   name: 'app',
   components: {
-    Flipbook
+    Flipbook, LeftIcon, RightIcon, PlusIcon, MinusIcon
   },
   mounted() {
     console.log('mounted!');
     const self = this;
     setTimeout(() => {
       self.pages = [
+        null,
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s001.jpg',
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s002.jpg',
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s003.jpg',
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s004.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s005.jpg'
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s005.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s006.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s007.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s008.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s009.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s010.jpg'
       ];
 
       self.pagesHiRes = [
+        null,
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s001.jpg',
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s002.jpg',
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s003.jpg',
         'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s004.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s005.jpg'
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s005.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s006.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s007.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s008.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s009.jpg',
+        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s010.jpg'
       ];
 
       console.log('page changed!');
     }, 500);
+
+    window.addEventListener('hashchange', this.setPageFromHash);
+    this.setPageFromHash();
   },
   data() {
     return {
       pages: [],
       pagesHiRes: [],
       hasMouse: true,
-      pageNum: null
+      pageNum: null,
+      zoom: [ 1 ]
     };
   },
   methods: {
@@ -95,18 +113,26 @@ export default {
     },
     onFlipLeftEnd(page) {
       console.log('left-end', page);
+      window.location.hash = `#${page}`;
     },
     onFlipRightStart(page) {
       console.log('right-start', page);
     },
     onFlipRightEnd(page) {
       console.log('right-end', page);
+      window.location.hash = `#${page}`;
     },
     onZoomStart(zoom) {
       console.log('zoom-start', zoom);
     },
     onZoomEnd(zoom) {
       console.log('zoom-end', zoom);
+    },
+    setPageFromHash() {
+      const n = parseInt(window.location.hash.slice(1));
+      if (isFinite(n)) {
+        this.pageNum = n;
+      }
     }
   }
 }
@@ -175,6 +201,11 @@ a {
 .action-bar .page-num {
   font-size: 12px;
   margin-left: 10px;
+}
+
+.flipbook {
+  width: 90vw;
+  height: calc(100vh - 50px - 40px);
 }
 
 .flipbook .viewport {
