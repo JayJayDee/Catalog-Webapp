@@ -55,45 +55,26 @@ import RightIcon from 'vue-material-design-icons/ChevronRightCircle'
 import PlusIcon from 'vue-material-design-icons/PlusCircle'
 import MinusIcon from 'vue-material-design-icons/MinusCircle'
 
+import { requestCatalog } from './contents';
+
 export default {
   name: 'app',
   components: {
     Flipbook, LeftIcon, RightIcon, PlusIcon, MinusIcon
   },
   mounted() {
-    console.log('mounted!');
     const self = this;
-    setTimeout(() => {
-      self.pages = [
-        null,
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s001.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s002.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s003.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s004.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s005.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s006.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s007.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s008.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s009.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s010.jpg'
-      ];
+    const loader = self.$loading.show({
+      loader: 'dots',
+      color: '#00AB00',
+      opacity: 0.1
+    });
 
-      self.pagesHiRes = [
-        null,
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s001.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s002.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s003.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s004.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s005.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s006.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s007.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s008.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s009.jpg',
-        'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s010.jpg'
-      ];
-
-      console.log('page changed!');
-    }, 500);
+    requestCatalog().then(({ pages }) => {
+      self.pages = pages;
+      self.pagesHiRes = pages;
+      loader.hide();
+    });
 
     window.addEventListener('hashchange', this.setPageFromHash);
     this.setPageFromHash();
@@ -163,11 +144,16 @@ a {
 
 .action-bar {
   width: 100%;
-  height: 30px;
+  height: 20px;
   padding: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.overlay-bar {
+  height: 100px;
+  width: 100%;
 }
 
 .action-bar .btn {
