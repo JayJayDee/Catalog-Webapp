@@ -64,10 +64,16 @@ export default {
   },
   mounted() {
     const self = this;
+    const loader = self.$loading.show({
+      loader: 'dots',
+      color: '#00AB00',
+      opacity: 0.1
+    });
 
     requestCatalog().then(({ pages }) => {
       self.pages = pages;
       self.pagesHiRes = pages;
+      loader.hide();
     });
 
     window.addEventListener('hashchange', this.setPageFromHash);
