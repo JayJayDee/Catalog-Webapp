@@ -145,7 +145,7 @@ a {
 .action-bar {
   width: 100%;
   height: 20px;
-  padding: 10px 0;
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
