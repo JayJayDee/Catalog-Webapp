@@ -55,6 +55,7 @@ import RightIcon from 'vue-material-design-icons/ChevronRightCircle'
 import PlusIcon from 'vue-material-design-icons/PlusCircle'
 import MinusIcon from 'vue-material-design-icons/MinusCircle'
 
+import { parse } from 'query-string';
 import { requestCatalog } from './contents';
 
 export default {
@@ -64,6 +65,10 @@ export default {
   },
   mounted() {
     const self = this;
+
+    const parsed = parse(location.search);
+    self.query = parsed;
+
     const loader = self.$loading.show({
       loader: 'dots',
       color: '#00AB00',
@@ -85,7 +90,8 @@ export default {
       pagesHiRes: [],
       hasMouse: true,
       pageNum: null,
-      zoom: [ 1 ]
+      zoom: [ 1 ],
+      query: {}
     };
   },
   methods: {
