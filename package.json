@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "npm run dev:backend & npm run dev:frontend",
     "dev:backend": "nodemon --watch ./backend -e js --exec \"node ./backend\"",
-    "backend": "node backend",
-    "serve": "vue-cli-service serve",
+    "dev:frontend": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "flipbook-vue": "^0.8.0",
