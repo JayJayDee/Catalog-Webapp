@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 const initMySQL =
-  async ({ conf }) => {
+  async (conf) => {
     const sequelize = new Sequelize({
       ...conf,
       dialect: 'mysql'
