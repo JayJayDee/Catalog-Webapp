@@ -1,7 +1,7 @@
-const axios = require('axios');
+import { create } from 'axios';
 
-const requester =
-  () => {
-    const baseUrl = process.env.VUE_APP_API_BASE;
-
-  };
+export const requester =
+  () => 
+    create({
+      baseURL: process.env.VUE_APP_API_BASE
+    });

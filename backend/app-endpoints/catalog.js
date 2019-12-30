@@ -20,7 +20,8 @@ const catalog =
               'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s007.jpg',
               'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s008.jpg',
               'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s009.jpg',
-              'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s010.jpg'
+              'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s010.jpg',
+              'http://seveneleven2.cafe24.com/_aiibook/20191201_catalog/catImage/441/s011.jpg'
             ]
           });
         }
