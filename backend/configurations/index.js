@@ -27,6 +27,11 @@ const mySQLConfig = () => ({
   }
 });
 
+const httpConfig = () => ({
+  port: mandantory('HTTP_PORT')
+});
+
 module.exports = {
-  mySQLConfig
+  mySQLConfig,
+  httpConfig
 };
