@@ -70,7 +70,7 @@ export default {
       opacity: 0.1
     });
 
-    requestCatalog().then(({ pages }) => {
+    requestCatalog('test').then(({ pages }) => {
       self.pages = pages;
       self.pagesHiRes = pages;
       loader.hide();

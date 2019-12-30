@@ -1,6 +1,6 @@
 
 export const requestCatalog =
-  async () => {
+  async (catalogId) => {
     await waitLittle(1500);
     return {
       thumbnails: [],
