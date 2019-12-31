@@ -1,4 +1,4 @@
-const { initDynamoDB } = require('./dynamodb');
+const { initDynamoDB, client } = require('./dynamodb');
 const { log } = require('../logger');
 const catalogRepository = require('./catalog-repository');
 
@@ -13,5 +13,6 @@ const initRepositories =
 
 module.exports = {
   initRepositories,
+  client,
   catalogRepository
 };

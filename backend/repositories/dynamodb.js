@@ -9,6 +9,12 @@ const dynamoDBTables = () => [
   {
     TableName: 'catalogs',
     BillingMode: 'PAY_PER_REQUEST',
+    AttributeDefinitions: [
+      {
+        AttributeName: 'id',
+        AttributeType: 'S'
+      }
+    ],
     KeySchema: [
       {
         AttributeName: 'id',
@@ -42,7 +48,19 @@ const inspectDynamoDB =
       existTables.filter((t) =>
         !listTablesResp.TableNames.includes(t.TableName));
 
-    console.log(createToBe);
+    if (createToBe.length > 0) {
+      const creationTableNames =
+        createToBe.map((t) => t.TableName).join(',');
+
+      log.info(`${tag} table(s) not found: ${creationTableNames}, will be created..`);
+
+      const promises =
+        createToBe.map((t) =>
+          client.root().createTable(t).promise());
+
+      await Promise.all(promises);
+      log.info(`${tag} table(s) created: ${creationTableNames}`);
+    }
   };
 
 module.exports = {

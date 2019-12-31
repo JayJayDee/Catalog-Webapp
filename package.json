@@ -7,7 +7,8 @@
     "dev:backend": "nodemon --watch ./backend -e js --exec \"node ./backend\"",
     "dev:frontend": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "util:initial-data": "node ./util/initial-data"
   },
   "dependencies": {
     "aws-sdk": "^2.596.0",
