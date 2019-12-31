@@ -92,6 +92,11 @@ export default {
       self.pages = pages;
       self.pagesHiRes = pages;
       loader.hide();
+    })
+    .catch((err) => {
+      console.log(err);
+      // TODO: error handling
+      loader.hide();
     });
 
     window.addEventListener('hashchange', this.setPageFromHash);
