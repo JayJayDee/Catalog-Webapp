@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const { initRepositories } = require('./repositories');
 const { initAppEndpoints } = require('./app-endpoints');
+const { initCmsEndpoints } = require('./cms-endpoints');
 const { initLogger, log } = require('./logger');
 const { httpConfig } = require('./configurations');
 
@@ -17,6 +18,7 @@ const tag = '[backend]';
 
   app.use(cors());
   app.use('/', initAppEndpoints());
+  app.use('/cms', initCmsEndpoints());
 
   const httpConf = httpConfig();
 
