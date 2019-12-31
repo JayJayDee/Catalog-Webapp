@@ -15,7 +15,7 @@ const catalogItems = () => [
           text: 'asdfas'
         }
       ],
-      indices: [
+      bookmarks: [
         {
           page: 2,
           title: '고등어'
