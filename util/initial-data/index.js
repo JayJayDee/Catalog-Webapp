@@ -9,6 +9,7 @@ const catalogItems = () => [
     TableName: 'catalogs',
     Item: {
       id: '1ae59c0ebc1',
+      title: '2020 설 선물 특선집',
       texts: [
         {
           page: 1,

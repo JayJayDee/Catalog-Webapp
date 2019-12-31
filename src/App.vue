@@ -4,8 +4,13 @@
     :class="{ 'has-mouse': hasMouse }"
     @touchstart="hasMouse = false"
   >
+    <Error
+      v-if="this.error"
+      :errorMessage="this.error" />
+
     <Flipbook
       class="flipbook"
+      v-if="!this.error"
       :pages="pages"
       :pagesHiRes="pagesHiRes"
       :startPage="pageNum"
@@ -49,6 +54,7 @@
 
 <script>
 import Flipbook from 'flipbook-vue';
+import Error from './components/Error.vue';
 import 'vue-material-design-icons/styles.css'
 import LeftIcon from 'vue-material-design-icons/ChevronLeftCircle'
 import RightIcon from 'vue-material-design-icons/ChevronRightCircle'
@@ -61,7 +67,7 @@ import { requestCatalog } from './contents';
 export default {
   name: 'app',
   components: {
-    Flipbook, LeftIcon, RightIcon, PlusIcon, MinusIcon
+    Flipbook, Error, LeftIcon, RightIcon, PlusIcon, MinusIcon
   },
   mounted() {
     const self = this;
@@ -69,13 +75,20 @@ export default {
     const parsed = parse(location.search);
     self.query = parsed;
 
+    if (!self.query.id) {
+      self.error = '잘못된 접근입니다.';
+      return;
+    }
+
     const loader = self.$loading.show({
       loader: 'dots',
       color: '#00AB00',
       opacity: 0.1
     });
 
-    requestCatalog('1ae59c0ebc1').then(({ pages }) => {
+    requestCatalog(this.query.id)
+    .then(({ pages, title }) => {
+      document.title = title;
       self.pages = pages;
       self.pagesHiRes = pages;
       loader.hide();
@@ -91,7 +104,8 @@ export default {
       hasMouse: true,
       pageNum: null,
       zoom: [ 1 ],
-      query: {}
+      query: {},
+      error: null
     };
   },
   methods: {

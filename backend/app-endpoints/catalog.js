@@ -11,6 +11,11 @@ const catalog =
 
           const catalog =
             await catalogRepository.queryCatalog(catalogId);
+
+          if (catalog === null) {
+            
+          }
+
           res.status(200).json(catalog);
         }
       ]
