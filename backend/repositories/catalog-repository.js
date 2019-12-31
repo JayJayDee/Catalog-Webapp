@@ -14,6 +14,8 @@ const queryCatalog =
           id: catalogId
         }
       }).promise();
+
+    if (!catalog.Item) return null;
     return catalog.Item;
   };
 
