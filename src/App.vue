@@ -24,6 +24,10 @@
       @zoom-start="onZoomStart"
       @zoom-end="onZoomEnd">
       <div class="action-bar">
+        <menu-icon
+          class="btn left"
+          @click="onBookmarkClicked"
+        />
         <left-icon
           class="btn left"
           :class="{ disabled: !flipbook.canFlipLeft }"
@@ -55,11 +59,12 @@
 <script>
 import Flipbook from 'flipbook-vue';
 import Error from './components/Error.vue';
-import 'vue-material-design-icons/styles.css'
-import LeftIcon from 'vue-material-design-icons/ChevronLeftCircle'
-import RightIcon from 'vue-material-design-icons/ChevronRightCircle'
-import PlusIcon from 'vue-material-design-icons/PlusCircle'
-import MinusIcon from 'vue-material-design-icons/MinusCircle'
+import 'vue-material-design-icons/styles.css';
+import LeftIcon from 'vue-material-design-icons/ChevronLeftCircle';
+import RightIcon from 'vue-material-design-icons/ChevronRightCircle';
+import PlusIcon from 'vue-material-design-icons/PlusCircle';
+import MinusIcon from 'vue-material-design-icons/MinusCircle';
+import MenuIcon from 'vue-material-design-icons/Menu';
 
 import { parse } from 'query-string';
 import { requestCatalog } from './contents';
@@ -68,7 +73,7 @@ import { ApiError } from './contents/errors';
 export default {
   name: 'app',
   components: {
-    Flipbook, Error, LeftIcon, RightIcon, PlusIcon, MinusIcon
+    Flipbook, Error, LeftIcon, RightIcon, PlusIcon, MinusIcon, MenuIcon
   },
   mounted() {
     const self = this;
@@ -141,6 +146,9 @@ export default {
       if (isFinite(n)) {
         this.pageNum = n;
       }
+    },
+    onBookmarkClicked() {
+      console.log('clicked');
     }
   }
 }
