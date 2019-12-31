@@ -63,6 +63,7 @@ import MinusIcon from 'vue-material-design-icons/MinusCircle'
 
 import { parse } from 'query-string';
 import { requestCatalog } from './contents';
+import { ApiError } from './contents/errors';
 
 export default {
   name: 'app',
@@ -94,9 +95,10 @@ export default {
       loader.hide();
     })
     .catch((err) => {
-      console.log(err);
-      // TODO: error handling
-      loader.hide();
+      if (err instanceof ApiError) {
+        self.error = err.message;
+        loader.hide();
+      }
     });
 
     window.addEventListener('hashchange', this.setPageFromHash);
