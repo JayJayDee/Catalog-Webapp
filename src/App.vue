@@ -4,6 +4,10 @@
     :class="{ 'has-mouse': hasMouse }"
     @touchstart="hasMouse = false"
   >
+    <b-modal
+      v-model="modals.bookmarks">
+    </b-modal>
+
     <Error
       v-if="this.error"
       :errorMessage="this.error" />
@@ -33,19 +37,19 @@
           :class="{ disabled: !flipbook.canFlipLeft }"
           @click="flipbook.flipLeft"
         />
-        <plus-icon
+        <!-- <plus-icon
           class="btn plus"
           :class="{ disabled: !flipbook.canZoomIn }"
           @click="flipbook.zoomIn"
-        />
+        /> -->
         <span class="page-num">
           {{ flipbook.page }} / {{ flipbook.numPages }}
         </span>
-        <minus-icon
+        <!-- <minus-icon
           class="btn minus"
           :class="{ disabled: !flipbook.canZoomOut }"
           @click="flipbook.zoomOut"
-        />
+        /> -->
         <right-icon
           class="btn right"
           :class="{ disabled: !flipbook.canFlipRight }"
@@ -62,9 +66,10 @@ import Error from './components/Error.vue';
 import 'vue-material-design-icons/styles.css';
 import LeftIcon from 'vue-material-design-icons/ChevronLeftCircle';
 import RightIcon from 'vue-material-design-icons/ChevronRightCircle';
-import PlusIcon from 'vue-material-design-icons/PlusCircle';
-import MinusIcon from 'vue-material-design-icons/MinusCircle';
+// import PlusIcon from 'vue-material-design-icons/PlusCircle';
+// import MinusIcon from 'vue-material-design-icons/MinusCircle';
 import MenuIcon from 'vue-material-design-icons/Menu';
+import { BModal } from 'bootstrap-vue';
 
 import { parse } from 'query-string';
 import { requestCatalog } from './contents';
@@ -73,7 +78,8 @@ import { ApiError } from './contents/errors';
 export default {
   name: 'app',
   components: {
-    Flipbook, Error, LeftIcon, RightIcon, PlusIcon, MinusIcon, MenuIcon
+    Flipbook, Error, LeftIcon, RightIcon, MenuIcon, BModal
+    // PlusIcon, MinusIcon,
   },
   mounted() {
     const self = this;
@@ -117,7 +123,10 @@ export default {
       pageNum: null,
       zoom: [ 1 ],
       query: {},
-      error: null
+      error: null,
+      modals: {
+        bookmarks: false
+      }
     };
   },
   methods: {
@@ -148,7 +157,7 @@ export default {
       }
     },
     onBookmarkClicked() {
-      console.log('clicked');
+      this.modals.bookmarks = true;
     }
   }
 }
@@ -221,7 +230,7 @@ a {
 
 .action-bar .page-num {
   font-size: 12px;
-  margin-left: 10px;
+  padding-left: 40px;
 }
 
 .flipbook {
